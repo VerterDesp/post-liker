@@ -1,0 +1,12 @@
+
+
+#Database
+spring:
+  data:
+    mongodb:
+      database: post-liker
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
