@@ -34,8 +34,7 @@ public class PostServiceImpl implements PostService {
         post.getId(),
         post.getNote(),
         post.getIdsWhoLiked().size(),
-        post.getAuthorName(),
-        post.getCreatedAt()))
+        post.getAuthorName()))
       .toList();
   }
 

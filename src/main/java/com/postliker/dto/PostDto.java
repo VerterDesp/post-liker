@@ -1,6 +1,5 @@
 package com.postliker.dto;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PostDto {
@@ -13,14 +12,11 @@ public class PostDto {
 
   private String author;
 
-  private LocalDateTime createdAt;
-
-  public PostDto(String id, String note, int likeCount, String author, LocalDateTime createdAt) {
+  public PostDto(String id, String note, int likeCount, String author) {
     this.id = id;
     this.note = note;
     this.likeCount = likeCount;
     this.author = author;
-    this.createdAt = createdAt;
   }
 
   public String getId() {
@@ -55,25 +51,17 @@ public class PostDto {
     this.author = author;
   }
 
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     PostDto postDto = (PostDto) o;
-    return likeCount == postDto.likeCount && Objects.equals(id, postDto.id) && Objects.equals(note, postDto.note) && Objects.equals(author, postDto.author) && Objects.equals(createdAt, postDto.createdAt);
+    return likeCount == postDto.likeCount && Objects.equals(id, postDto.id) && Objects.equals(note, postDto.note) && Objects.equals(author, postDto.author);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, note, likeCount, author, createdAt);
+    return Objects.hash(id, note, likeCount, author);
   }
 
   @Override
@@ -83,7 +71,6 @@ public class PostDto {
       ", note='" + note + '\'' +
       ", likeCount=" + likeCount +
       ", author='" + author + '\'' +
-      ", createdAt=" + createdAt +
       '}';
   }
 }
