@@ -1,15 +1,20 @@
 package com.postliker.auth;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
-public class AuthenticationRequest {
+public class LoginRequest {
 
+  @NotEmpty
+  @Email
   private String email;
+
+  @NotEmpty
   private String password;
 
-  public AuthenticationRequest() {}
-
-  public AuthenticationRequest(String email, String password) {
+  public LoginRequest(String email, String password) {
     this.email = email;
     this.password = password;
   }
@@ -34,7 +39,7 @@ public class AuthenticationRequest {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    AuthenticationRequest that = (AuthenticationRequest) o;
+    LoginRequest that = (LoginRequest) o;
     return Objects.equals(email, that.email) && Objects.equals(password, that.password);
   }
 

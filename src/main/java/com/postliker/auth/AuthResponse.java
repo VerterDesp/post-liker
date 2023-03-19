@@ -2,14 +2,11 @@ package com.postliker.auth;
 
 import java.util.Objects;
 
-public class AuthenticationResponse {
+public class AuthResponse {
 
   private String token;
 
-  public AuthenticationResponse() {
-  }
-
-  public AuthenticationResponse(String token) {
+  public AuthResponse(String token) {
     this.token = token;
   }
 
@@ -25,7 +22,7 @@ public class AuthenticationResponse {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    AuthenticationResponse that = (AuthenticationResponse) o;
+    AuthResponse that = (AuthResponse) o;
     return Objects.equals(token, that.token);
   }
 

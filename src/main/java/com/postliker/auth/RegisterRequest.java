@@ -1,14 +1,21 @@
 package com.postliker.auth;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class RegisterRequest {
 
+  @NotEmpty
   private String name;
-  private String email;
-  private String password;
 
-  public RegisterRequest() {}
+  @NotEmpty
+  @Email
+  private String email;
+
+  @NotEmpty
+  private String password;
 
   public RegisterRequest(String name, String email, String password) {
     this.name = name;

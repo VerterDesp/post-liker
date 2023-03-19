@@ -1,5 +1,3 @@
-
-
 #Database
 spring:
   data:
@@ -10,3 +8,8 @@ spring:
       authentication-database: admin
       username: rootuser
       password: rootpass
+
+#JWT
+jwt:
+  secret: 66546A576E5A7234753778214125442A472D4B6150645267556B587032733576
+  expire-minutes: 30
