@@ -16,24 +16,20 @@ public class Token {
   @Indexed(unique = true)
   private String token;
 
-  private TokenType tokenType = TokenType.BEARER;
+  private TokenType tokenType;
 
   private boolean revoked;
 
   private boolean expired;
 
-//  @ManyToOne
-//  @JoinColumn(name = "user_id")
-  private User user;
+  private String userId;
 
-  public Token() {}
-
-  public Token(String token, TokenType tokenType, boolean revoked, boolean expired, User user) {
+  public Token(String token, TokenType tokenType, boolean revoked, boolean expired, String userId) {
     this.token = token;
     this.tokenType = tokenType;
     this.revoked = revoked;
     this.expired = expired;
-    this.user = user;
+    this.userId = userId;
   }
 
   public String getId() {
@@ -76,12 +72,12 @@ public class Token {
     this.expired = expired;
   }
 
-  public User getUser() {
-    return user;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   @Override
@@ -89,23 +85,23 @@ public class Token {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Token token1 = (Token) o;
-    return revoked == token1.revoked && expired == token1.expired && Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && tokenType == token1.tokenType && Objects.equals(user, token1.user);
+    return revoked == token1.revoked && expired == token1.expired && Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && tokenType == token1.tokenType && Objects.equals(userId, token1.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, token, tokenType, revoked, expired, user);
+    return Objects.hash(id, token, tokenType, revoked, expired, userId);
   }
 
   @Override
   public String toString() {
     return "Token{" +
-      "id=" + id +
+      "id='" + id + '\'' +
       ", token='" + token + '\'' +
       ", tokenType=" + tokenType +
       ", revoked=" + revoked +
       ", expired=" + expired +
-      ", user=" + user +
+      ", userId='" + userId + '\'' +
       '}';
   }
 }

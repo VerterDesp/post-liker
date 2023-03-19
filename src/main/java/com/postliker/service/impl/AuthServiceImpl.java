@@ -4,6 +4,8 @@ import com.postliker.auth.AuthResponse;
 import com.postliker.auth.LoginRequest;
 import com.postliker.auth.RegisterRequest;
 import com.postliker.config.jwt.JwtService;
+import com.postliker.exception.EmailAlreadyRegisteredException;
+import com.postliker.exception.WrongCredentialsException;
 import com.postliker.model.Token;
 import com.postliker.model.User;
 import com.postliker.model.enums.Role;
@@ -41,15 +43,17 @@ public class AuthServiceImpl implements AuthService {
     this.authenticationManager = authenticationManager;
   }
 
-  public AuthResponse register(RegisterRequest request) {
-    User user = new User(request.getName(), request.getEmail(),
-      passwordEncoder.encode(request.getPassword()), Role.USER);
+  public void register(RegisterRequest request) {
+    if(userRepository.findByEmail(request.getEmail()).isEmpty()) {
+      User user = new User(request.getName(),
+                           request.getEmail(),
+                           passwordEncoder.encode(request.getPassword()),
+                           Role.USER);
 
-    User savedUser = userRepository.save(user);
-    String jwtToken = jwtService.generateToken(user.getUsername());
-
-    saveUserToken(savedUser, jwtToken);
-    return new AuthResponse(jwtToken);
+      userRepository.save(user);
+    } else {
+      throw new EmailAlreadyRegisteredException();
+    }
   }
 
   public AuthResponse login(LoginRequest request) {
@@ -60,21 +64,21 @@ public class AuthServiceImpl implements AuthService {
         )
     );
     User user = userRepository.findByEmail(request.getEmail())
-                              .orElseThrow();
+                              .orElseThrow(WrongCredentialsException::new);
 
     String jwtToken = jwtService.generateToken(user.getUsername());
 
     revokeAllUserTokens(user);
-    saveUserToken(user, jwtToken);
+    saveUserToken(user.getId(), jwtToken);
     return new AuthResponse(jwtToken);
   }
 
-  private void saveUserToken(User user, String jwtToken) {
-    tokenRepository.save(new Token(jwtToken, TokenType.BEARER, false, false, user));
+  private void saveUserToken(String userId, String jwtToken) {
+    tokenRepository.save(new Token(jwtToken, TokenType.BEARER, false, false, userId));
   }
 
   private void revokeAllUserTokens(User user) {
-    List<Token> validUserTokens = tokenRepository.findAllValidTokenByUserId(user.getId());
+    List<Token> validUserTokens = tokenRepository.findByExpiredIsFalseAndRevokedIsFalseAndUserId(user.getId());
     if (validUserTokens.isEmpty()) {
       return;
     }

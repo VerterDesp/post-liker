@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Document
 public class Post {
@@ -13,21 +16,16 @@ public class Post {
 
   private String note;
 
-  private int likeCount;
+  private List<String> idsWhoLiked = new ArrayList<>();
 
-  private User author;
+  private String authorId;
+
+  private String authorName;
 
   private LocalDateTime createdAt = LocalDateTime.now();
 
-  public Post() {}
-
   public Post(String note) {
     this.note = note;
-  }
-
-  public Post(String note, User author) {
-    this.note = note;
-    this.author = author;
   }
 
   public String getId() {
@@ -46,20 +44,20 @@ public class Post {
     this.note = note;
   }
 
-  public int getLikeCount() {
-    return likeCount;
+  public List<String> getIdsWhoLiked() {
+    return idsWhoLiked;
   }
 
-  public void setLikeCount(int likeCount) {
-    this.likeCount = likeCount;
+  public void setIdsWhoLiked(List<String> idsWhoLiked) {
+    this.idsWhoLiked = idsWhoLiked;
   }
 
-  public User getAuthor() {
-    return author;
+  public String getAuthorId() {
+    return authorId;
   }
 
-  public void setAuthor(User author) {
-    this.author = author;
+  public void setAuthorId(String authorId) {
+    this.authorId = authorId;
   }
 
   public LocalDateTime getCreatedAt() {
@@ -68,5 +66,38 @@ public class Post {
 
   public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public String getAuthorName() {
+    return authorName;
+  }
+
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Post post = (Post) o;
+    return Objects.equals(id, post.id) && Objects.equals(note, post.note) && Objects.equals(idsWhoLiked, post.idsWhoLiked) && Objects.equals(authorId, post.authorId) && Objects.equals(authorName, post.authorName) && Objects.equals(createdAt, post.createdAt);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, note, idsWhoLiked, authorId, authorName, createdAt);
+  }
+
+  @Override
+  public String toString() {
+    return "Post{" +
+      "id='" + id + '\'' +
+      ", note='" + note + '\'' +
+      ", idsWhoLiked=" + idsWhoLiked +
+      ", authorId='" + authorId + '\'' +
+      ", authorName='" + authorName + '\'' +
+      ", createdAt=" + createdAt +
+      '}';
   }
 }

@@ -19,8 +19,8 @@ public class PostController {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("all")
-  public List<PostDto> getAllPosts(@RequestParam(required = false) String sortType) {
-    return postService.getAllPosts(sortType);
+  public List<PostDto> getAllPosts(@RequestParam(required = false) String sort) {
+    return postService.getAllPosts(sort);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -29,7 +29,7 @@ public class PostController {
     postService.savePost(note);
   }
 
-  @ResponseStatus(HttpStatus.ACCEPTED)
+  @ResponseStatus(HttpStatus.OK)
   @DeleteMapping("delete/{postId}")
   public void deletePost(@PathVariable String postId) {
     postService.deletePost(postId);
@@ -41,8 +41,9 @@ public class PostController {
     postService.editPost(note, postId);
   }
 
+  @ResponseStatus(HttpStatus.OK)
   @PutMapping("like/{postId}")
-  public void addLike(@PathVariable String postId) {
-
+  public void like(@PathVariable String postId) {
+    postService.like(postId);
   }
 }

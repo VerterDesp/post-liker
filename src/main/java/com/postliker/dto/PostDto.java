@@ -1,36 +1,34 @@
 package com.postliker.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.postliker.model.User;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PostDto {
 
+  private String id;
+
   private String note;
 
   private int likeCount;
 
-  @JsonIgnore
-  private User author;
+  private String author;
 
-//  @JsonIgnore
   private LocalDateTime createdAt;
 
-  public PostDto(String note) {
-    this.note = note;
-  }
-
-  public PostDto(String note, int likeCount) {
+  public PostDto(String id, String note, int likeCount, String author, LocalDateTime createdAt) {
+    this.id = id;
     this.note = note;
     this.likeCount = likeCount;
-  }
-
-  public PostDto(String note, int likeCount, LocalDateTime createdAt) {
-    this.note = note;
-    this.likeCount = likeCount;
+    this.author = author;
     this.createdAt = createdAt;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getNote() {
@@ -49,11 +47,11 @@ public class PostDto {
     this.likeCount = likeCount;
   }
 
-  public User getAuthor() {
+  public String getAuthor() {
     return author;
   }
 
-  public void setAuthor(User author) {
+  public void setAuthor(String author) {
     this.author = author;
   }
 
@@ -70,20 +68,21 @@ public class PostDto {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     PostDto postDto = (PostDto) o;
-    return likeCount == postDto.likeCount && Objects.equals(note, postDto.note) && Objects.equals(author, postDto.author) && Objects.equals(createdAt, postDto.createdAt);
+    return likeCount == postDto.likeCount && Objects.equals(id, postDto.id) && Objects.equals(note, postDto.note) && Objects.equals(author, postDto.author) && Objects.equals(createdAt, postDto.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(note, likeCount, author, createdAt);
+    return Objects.hash(id, note, likeCount, author, createdAt);
   }
 
   @Override
   public String toString() {
     return "PostDto{" +
-      "note='" + note + '\'' +
+      "id='" + id + '\'' +
+      ", note='" + note + '\'' +
       ", likeCount=" + likeCount +
-      ", author=" + author +
+      ", author='" + author + '\'' +
       ", createdAt=" + createdAt +
       '}';
   }

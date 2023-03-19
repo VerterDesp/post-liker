@@ -12,4 +12,6 @@ public interface PostService {
   void deletePost(String postId);
 
   void editPost(String note, String postId);
+
+  void like(String postId);
 }
