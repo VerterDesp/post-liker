@@ -1,5 +1,6 @@
 package com.postliker.auth;
 
+import com.postliker.config.advice.ApiValidationMessages;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -7,11 +8,11 @@ import java.util.Objects;
 
 public class LoginRequest {
 
-  @NotEmpty
-  @Email
+  @NotEmpty(message = ApiValidationMessages.LOGIN_EMAIL_EMPTY)
+  @Email(message = ApiValidationMessages.LOGIN_EMAIL_NOT_VALID)
   private String email;
 
-  @NotEmpty
+  @NotEmpty(message = ApiValidationMessages.LOGIN_PASSWORD_EMPTY)
   private String password;
 
   public LoginRequest(String email, String password) {
