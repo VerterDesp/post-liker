@@ -5,7 +5,6 @@ import com.postliker.auth.LoginRequest;
 import com.postliker.auth.RegisterRequest;
 import com.postliker.config.jwt.JwtService;
 import com.postliker.exception.EmailAlreadyRegisteredException;
-import com.postliker.exception.WrongCredentialsException;
 import com.postliker.model.Token;
 import com.postliker.model.User;
 import com.postliker.model.enums.Role;
@@ -64,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         )
     );
     User user = userRepository.findByEmail(request.getEmail())
-                              .orElseThrow(WrongCredentialsException::new);
+                              .orElseThrow();
 
     String jwtToken = jwtService.generateToken(user.getUsername());
 
